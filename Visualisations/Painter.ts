@@ -24,10 +24,11 @@ export class Painter{
            dimensions[1] < this.matrix.height()){
             throw new Error("Cannot paint " + dimensions + " on " + [this.matrix.width(), this.matrix.height()])
         }
+        
         this.matrix.clear()
         for(let i = 0; i < this.matrix.width(); i++){
             for(let j = 0; j < this.matrix.height(); j++){
-                this.matrix.fgColor(colorMap[i][j]).setPixel(j,i);
+                this.matrix.fgColor(colorMap[i][j] ? colorMap[i][j] : {r:0, g:0, b:0}).setPixel(i,j);
             }
         }
         this.matrix.sync();

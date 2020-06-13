@@ -5,6 +5,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/mathjs": "^6.0.5",
+    "eslint": "^7.2.0",
+    "prettier": "^2.0.5",
     "rpi-led-matrix": "^1.10.0",
     "typescript": "^3.9.5"
   },
