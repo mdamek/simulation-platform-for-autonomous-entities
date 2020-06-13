@@ -18,6 +18,14 @@ export class Painter {
   constructor() {
     this.matrix = new LedMatrix(matrixOptions, runtimeOptions);
   }
+  Sleep(millis: number) {
+    let date = Date.now();
+    let curDate = null;
+    do {
+      curDate = Date.now();
+    } while (curDate - date < millis);
+  }
+
   Paint(colorMap: Array<Array<Color>>): void {
     let dimensions = findDim(colorMap);
     if (

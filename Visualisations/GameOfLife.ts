@@ -84,7 +84,9 @@ var theGrid = createArray(gridWidth);
 var mirrorGrid = createArray(gridWidth);
 let painter = new Painter();
 fillRandom();
+
 while (true) {
   painter.Paint(theGrid);
   updateGrid();
+  painter.Sleep(200);
 }
