@@ -4,14 +4,6 @@ import { Painter } from "./Painter";
 let death: Color = { r: 0, g: 0, b: 0 };
 let alive: Color = { r: 255, g: 0, b: 0 };
 
-function createArray(dim: number) {
-  let map: Color[][] = [];
-  for (var i = 0; i < dim; i++) {
-    map[i] = new Array(dim);
-  }
-  return map;
-}
-
 function fillRandom() {
   for (let j = 0; j < gridHeight; j++) {
     for (let k = 0; k < gridWidth; k++) {
@@ -77,12 +69,12 @@ function updateGrid() {
     }
   }
 }
-
+let painter = new Painter();
 var gridHeight = 32;
 var gridWidth = 32;
-var theGrid = createArray(gridWidth);
-var mirrorGrid = createArray(gridWidth);
-let painter = new Painter();
+var theGrid = painter.CreateArray(gridWidth);
+var mirrorGrid = painter.CreateArray(gridWidth);
+
 fillRandom();
 
 while (true) {

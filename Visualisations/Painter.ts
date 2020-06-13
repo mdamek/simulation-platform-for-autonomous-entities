@@ -18,6 +18,15 @@ export class Painter {
   constructor() {
     this.matrix = new LedMatrix(matrixOptions, runtimeOptions);
   }
+
+  CreateArray(dim: number) {
+    let map: Color[][] = [];
+    for (var i = 0; i < dim; i++) {
+      map[i] = new Array(dim);
+    }
+    return map;
+  }
+
   Sleep(millis: number) {
     let date = Date.now();
     let curDate = null;
@@ -40,12 +49,11 @@ export class Painter {
       );
     }
 
-    this.matrix.clear();
     for (let i = 0; i < this.matrix.width(); i++) {
       for (let j = 0; j < this.matrix.height(); j++) {
         this.matrix
           .fgColor(colorMap[i][j] ? colorMap[i][j] : { r: 0, g: 0, b: 0 })
-          .setPixel(i, j);
+          .setPixel(j, i);
       }
     }
     this.matrix.sync();
