@@ -1,5 +1,6 @@
 import { Color } from "rpi-led-matrix";
 import { Painter } from "./Painter";
+import { performance } from "perf_hooks";
 
 let death: Color = { r: 0, g: 0, b: 0 };
 let alive: Color = { r: 255, g: 0, b: 0 };
@@ -7,7 +8,7 @@ let alive: Color = { r: 255, g: 0, b: 0 };
 function fillRandom() {
   for (let j = 0; j < gridHeight; j++) {
     for (let k = 0; k < gridWidth; k++) {
-      if (Math.round(Math.random()) === 1) {
+      if (Math.random() < 0.7) {
         theGrid[j][k] = alive;
       } else {
         theGrid[j][k] = death;
@@ -74,11 +75,15 @@ var gridHeight = 32;
 var gridWidth = 32;
 var theGrid = painter.CreateArray(gridWidth);
 var mirrorGrid = painter.CreateArray(gridWidth);
-
+let c = 0;
 fillRandom();
-
-while (true) {
+let iterationsNumber = process.argv[2] ? process.argv[2] : 1000;
+console.log("Number of iterations: " + iterationsNumber);
+let start = performance.now();
+while (c < iterationsNumber) {
   painter.Paint(theGrid);
   updateGrid();
-  painter.Sleep(200);
+  c++;
 }
+let stop = performance.now();
+console.log("Time:" + (stop - start));

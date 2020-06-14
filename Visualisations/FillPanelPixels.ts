@@ -6,10 +6,12 @@ function getRndInteger(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 let c = 0;
-let start = performance.now();
-let painter = new Painter();
 
-while (c < 1200) {
+let painter = new Painter();
+let iterationsNumber = process.argv[2] ? process.argv[2] : 1000;
+console.log("Number of iterations: " + iterationsNumber);
+let start = performance.now();
+while (c < iterationsNumber) {
   let color: Color = {
     r: getRndInteger(0, 255),
     g: getRndInteger(0, 255),
