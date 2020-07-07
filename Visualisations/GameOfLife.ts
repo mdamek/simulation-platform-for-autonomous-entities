@@ -8,7 +8,7 @@ let alive: Color = { r: 255, g: 0, b: 0 };
 function fillRandom() {
   for (let j = 0; j < gridHeight; j++) {
     for (let k = 0; k < gridWidth; k++) {
-      if (Math.random() < 0.7) {
+      if (Math.random() < 0.6) {
         theGrid[j][k] = alive;
       } else {
         theGrid[j][k] = death;
@@ -82,6 +82,7 @@ console.log("Number of iterations: " + iterationsNumber);
 let start = performance.now();
 while (c < iterationsNumber) {
   painter.Paint(theGrid);
+  painter.Sleep(200);
   updateGrid();
   c++;
 }
