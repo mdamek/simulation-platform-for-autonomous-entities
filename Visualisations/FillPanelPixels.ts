@@ -1,10 +1,6 @@
 import { performance } from "perf_hooks";
 import { Painter } from "./Painter";
 import { Color } from "rpi-led-matrix";
-
-function getRndInteger(min: number, max: number): number {
-  return Math.floor(Math.random() * (max - min)) + min;
-}
 let c = 0;
 
 let painter = new Painter();
@@ -12,11 +8,7 @@ let iterationsNumber = process.argv[2] ? process.argv[2] : 1000;
 console.log("Number of iterations: " + iterationsNumber);
 let start = performance.now();
 while (c < iterationsNumber) {
-  let color: Color = {
-    r: getRndInteger(0, 255),
-    g: getRndInteger(0, 255),
-    b: getRndInteger(0, 255),
-  };
+  let color: Color = painter.GetRandomColor();
 
   let map: Color[][] = painter.CreateArray(32);
 

@@ -1,4 +1,4 @@
-import { LedMatrix, LedMatrixInstance, Color } from "rpi-led-matrix";
+import { LedMatrix, LedMatrixInstance, Color, Font } from "rpi-led-matrix";
 import { matrixOptions, runtimeOptions } from "./_config";
 
 function findDim(a: Color[][]) {
@@ -35,6 +35,17 @@ export class Painter {
     } while (curDate - date < millis);
   }
 
+  GetRandomColor(): Color {
+    function getRndInteger(min: number, max: number): number {
+      return Math.floor(Math.random() * (max - min)) + min;
+    }
+    return {
+      r: getRndInteger(0, 255),
+      g: getRndInteger(0, 255),
+      b: getRndInteger(0, 255),
+    };
+  }
+
   Paint(colorMap: Array<Array<Color>>): void {
     let dimensions = findDim(colorMap);
     if (
@@ -57,5 +68,17 @@ export class Painter {
       }
     }
     this.matrix.sync();
+  }
+  PrintString(text: string): void {
+    const font = new Font("helvR12", `${process.cwd()}/fonts/helvR12.bdf`);
+    this.matrix.font(font);
+    const textWidth = font.stringWidth(text);
+    this.matrix.fgColor(this.GetRandomColor()).clear();
+    for (let i = this.matrix.width(); i > -textWidth; i--) {
+      this.matrix.drawText(text, i, (this.matrix.height() - font.height()) / 2);
+      this.matrix.sync();
+      this.Sleep(50);
+      this.matrix.clear();
+    }
   }
 }

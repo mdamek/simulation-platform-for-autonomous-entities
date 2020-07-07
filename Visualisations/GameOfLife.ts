@@ -2,9 +2,6 @@ import { Color } from "rpi-led-matrix";
 import { Painter } from "./Painter";
 import { performance } from "perf_hooks";
 
-let death: Color = { r: 0, g: 0, b: 0 };
-let alive: Color = { r: 255, g: 0, b: 0 };
-
 function fillRandom() {
   for (let j = 0; j < gridHeight; j++) {
     for (let k = 0; k < gridWidth; k++) {
@@ -71,6 +68,8 @@ function updateGrid() {
   }
 }
 let painter = new Painter();
+let death: Color = { r: 0, g: 0, b: 0 };
+let alive: Color = painter.GetRandomColor();
 var gridHeight = 32;
 var gridWidth = 32;
 var theGrid = painter.CreateArray(gridWidth);
