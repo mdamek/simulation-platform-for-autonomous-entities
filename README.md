@@ -2,7 +2,6 @@
  A hardware and software platform for parallel simulation and visualization of the behavior of groups of autonomous entities
 
 
-
 The Painter class provides a Paint method that allows you to display any two-dimensional arrays that store the colors of pixel data. 
 Color is understood as an object with properties corresponding to the basic RGB channels. This method is based on setting subsequent pixel values 
 and displaying the created image after setting all pixel values on the LED panel. 
@@ -17,7 +16,8 @@ In addition, this class provides auxiliary methods:
 ***ShowImage*** - displays any image for a specified time
 
 
-There are 5 use cases in the Visualisations folder:
+## Use cases 
+#### There are 5 Use cases in the Visualisations folder:
 
 ***FillPanelPixel*** - filling the entire display surface with random color.
 
