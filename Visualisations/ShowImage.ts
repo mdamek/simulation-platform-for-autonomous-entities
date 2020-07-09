@@ -3,6 +3,7 @@ import { Painter } from "./Painter";
 export async function ShowImage(painter: Painter) {
   let paths: string[] = [
     "./images/play.png",
+    "./images/raspberry.png",
     "./images/cat.png",
     "./images/plane.png",
     "./images/house.jpeg",
