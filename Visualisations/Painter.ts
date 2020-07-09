@@ -1,5 +1,6 @@
 import { LedMatrix, LedMatrixInstance, Color, Font } from "rpi-led-matrix";
 import { matrixOptions, runtimeOptions } from "./_config";
+import * as Jimp from "jimp";
 
 function findDim(a: Color[][]) {
   let mainLen = a.length;
@@ -32,7 +33,7 @@ export class Painter {
     this.matrix = new LedMatrix(matrixOptions, runtimeOptions);
   }
 
-  CreateArray(dim: number) {
+  CreateArray(dim: number): Color[][] {
     let map: Color[][] = [];
     for (var i = 0; i < dim; i++) {
       map[i] = new Array(dim);
@@ -103,5 +104,23 @@ export class Painter {
       this.Sleep(20);
       this.matrix.clear();
     }
+  }
+
+  ShowImage(image: string, displayTime: number) {
+    let array = this.CreateArray(this.matrix.width());
+    Jimp.read(image).then((result) => {
+      result.resize(this.matrix.width(), this.matrix.height());
+      for (let i = 0; i < this.matrix.width(); i++) {
+        for (let j = 0; j < this.matrix.height(); j++) {
+          let pixel = result.getPixelColor(j, i);
+          let rgba = Jimp.intToRGBA(pixel);
+          let color: Color = { r: rgba.r, g: rgba.g, b: rgba.b };
+          array[i][j] = color;
+        }
+      }
+      this.Paint(array);
+      this.Sleep(displayTime);
+      this.matrix.clear();
+    });
   }
 }
