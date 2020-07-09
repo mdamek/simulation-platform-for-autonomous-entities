@@ -19,11 +19,15 @@ In addition, this class provides auxiliary methods:
 
 There are 5 use cases in the Visualisations folder:
 
-
 ***FillPanelPixel*** - filling the entire display surface with random color.
+
 ***NextPixelsOn*** - lighting of subsequent pixels on the display.
+
 ***GameOfLife*** - an example of a cellular automaton closest to the implementations for which the platform is to be used
+
 ***PrintText*** - display the inscription "Pracownia problemowa Marcin Damek Dominik Kędzior"
+
 ***ShowImage*** -display images from images folder at 1 second interval
+
 
 [***Action presentation - YouTube***](https://youtu.be/YfUaiunCVZE)
