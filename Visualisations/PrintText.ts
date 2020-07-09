@@ -1,7 +1,7 @@
 import { Painter } from "./Painter";
 
-let painter = new Painter();
+export function PrintText(painter: Painter) {
+  let text = "Pracowania Problemowa Marcin Damek Dominik Kedzior";
 
-let text = "Pracowania Problemowa Marcin Damek Dominik Kedzior";
-
-painter.PrintString(text);
+  painter.PrintString(text);
+}

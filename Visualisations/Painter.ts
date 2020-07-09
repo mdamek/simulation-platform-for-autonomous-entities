@@ -106,9 +106,9 @@ export class Painter {
     }
   }
 
-  ShowImage(image: string, displayTime: number) {
+  async ShowImage(image: string, displayTime: number) {
     let array = this.CreateArray(this.matrix.width());
-    Jimp.read(image).then((result) => {
+    await Jimp.read(image).then((result) => {
       result.resize(this.matrix.width(), this.matrix.height());
       for (let i = 0; i < this.matrix.width(); i++) {
         for (let j = 0; j < this.matrix.height(); j++) {
