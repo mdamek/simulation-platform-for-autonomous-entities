@@ -12,6 +12,19 @@ function findDim(a: Color[][]) {
 
   return [mainLen, subLen];
 }
+function chunkArray(myArray: string, chunk_size: number) {
+  var index = 0;
+  var arrayLength = myArray.length;
+  var tempArray = [];
+
+  for (index = 0; index < arrayLength; index += chunk_size) {
+    let myChunk = myArray.slice(index, index + chunk_size);
+    // Do something if you want with the group
+    tempArray.push(myChunk);
+  }
+
+  return tempArray;
+}
 
 export class Painter {
   matrix: LedMatrixInstance;
@@ -69,15 +82,25 @@ export class Painter {
     }
     this.matrix.sync();
   }
+
   PrintString(text: string): void {
     const font = new Font("helvR12", `${process.cwd()}/fonts/helvR12.bdf`);
     this.matrix.font(font);
     const textWidth = font.stringWidth(text);
+    let stringsArray = chunkArray(text, 14);
     this.matrix.fgColor(this.GetRandomColor()).clear();
     for (let i = this.matrix.width(); i > -textWidth; i--) {
-      this.matrix.drawText(text, i, (this.matrix.height() - font.height()) / 2);
+      let move = 0;
+      for (let j = 0; j < stringsArray.length; j++) {
+        move += j === 0 ? i : font.stringWidth(stringsArray[j - 1]);
+        this.matrix.drawText(
+          stringsArray[j],
+          move,
+          (this.matrix.height() - font.height()) / 2
+        );
+      }
       this.matrix.sync();
-      this.Sleep(50);
+      this.Sleep(20);
       this.matrix.clear();
     }
   }

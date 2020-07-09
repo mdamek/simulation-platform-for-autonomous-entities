@@ -2,6 +2,6 @@ import { Painter } from "./Painter";
 
 let painter = new Painter();
 
-let text = "Pronto Mordo!";
+let text = "Pracowania Problemowa Marcin Damek Dominik Kedzior";
 
 painter.PrintString(text);
