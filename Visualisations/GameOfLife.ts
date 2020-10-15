@@ -16,9 +16,9 @@ export function GameOfLife(iterationsNumber: number, painter: Painter) {
   }
 
   function updateGrid() {
-    for (var j = 1; j < gridHeight - 1; j++) {
-      for (var k = 1; k < gridWidth - 1; k++) {
-        var totalCells = 0;
+    for (let j = 1; j < gridHeight - 1; j++) {
+      for (let k = 1; k < gridWidth - 1; k++) {
+        let totalCells = 0;
         totalCells += theGrid[j - 1][k - 1] === alive ? 1 : 0;
         totalCells += theGrid[j - 1][k] === alive ? 1 : 0;
         totalCells += theGrid[j - 1][k + 1] === alive ? 1 : 0;
@@ -62,28 +62,28 @@ export function GameOfLife(iterationsNumber: number, painter: Painter) {
       }
     }
 
-    for (var j = 0; j < gridHeight; j++) {
-      for (var k = 0; k < gridWidth; k++) {
+    for (let j = 0; j < gridHeight; j++) {
+      for (let k = 0; k < gridWidth; k++) {
         theGrid[j][k] = mirrorGrid[j][k];
       }
     }
   }
-  let death: Color = { r: 0, g: 0, b: 0 };
-  let alive: Color = painter.GetRandomColor();
-  var gridHeight = 32;
-  var gridWidth = 32;
-  var theGrid = painter.CreateArray(gridWidth);
-  var mirrorGrid = painter.CreateArray(gridWidth);
+  const death: Color = { r: 0, g: 0, b: 0 };
+  const alive: Color = painter.GetRandomColor();
+  const gridHeight = 32;
+  const gridWidth = 32;
+  const theGrid = painter.CreateArray(gridWidth);
+  const mirrorGrid = painter.CreateArray(gridWidth);
   let c = 0;
   fillRandom();
   console.log("Number of iterations: " + iterationsNumber);
-  let start = performance.now();
+  const start = performance.now();
   while (c < iterationsNumber) {
     painter.Paint(theGrid);
     painter.Sleep(200);
     updateGrid();
     c++;
   }
-  let stop = performance.now();
+  const stop = performance.now();
   console.log("Time:" + (stop - start));
 }

@@ -3,23 +3,23 @@ import { matrixOptions, runtimeOptions } from "./_config";
 import * as Jimp from "jimp";
 
 function findDim(a: Color[][]) {
-  let mainLen = a.length;
+  const mainLen = a.length;
   let subLen = a[0].length;
 
   for (let i = 0; i < mainLen; i++) {
-    let len = a[i].length;
+    const len = a[i].length;
     subLen = len < subLen ? len : subLen;
   }
 
   return [mainLen, subLen];
 }
 function chunkArray(myArray: string, chunk_size: number) {
-  var index = 0;
-  var arrayLength = myArray.length;
-  var tempArray = [];
+  let index = 0;
+  const arrayLength = myArray.length;
+  const tempArray = [];
 
   for (index = 0; index < arrayLength; index += chunk_size) {
-    let myChunk = myArray.slice(index, index + chunk_size);
+    const myChunk = myArray.slice(index, index + chunk_size);
     // Do something if you want with the group
     tempArray.push(myChunk);
   }
@@ -34,15 +34,15 @@ export class Painter {
   }
 
   CreateArray(dim: number): Color[][] {
-    let map: Color[][] = [];
-    for (var i = 0; i < dim; i++) {
+    const map: Color[][] = [];
+    for (let i = 0; i < dim; i++) {
       map[i] = new Array(dim);
     }
     return map;
   }
 
   Sleep(millis: number) {
-    let date = Date.now();
+    const date = Date.now();
     let curDate = null;
     do {
       curDate = Date.now();
@@ -60,8 +60,8 @@ export class Painter {
     };
   }
 
-  Paint(colorMap: Array<Array<Color>>): void {
-    let dimensions = findDim(colorMap);
+  Paint(colorMap: Color[][]): void {
+    const dimensions = findDim(colorMap);
     if (
       dimensions[0] < this.matrix.width() ||
       dimensions[1] < this.matrix.height()
@@ -88,7 +88,7 @@ export class Painter {
     const font = new Font("helvR12", `${process.cwd()}/fonts/helvR12.bdf`);
     this.matrix.font(font);
     const textWidth = font.stringWidth(text);
-    let stringsArray = chunkArray(text, 14);
+    const stringsArray = chunkArray(text, 14);
     this.matrix.fgColor(this.GetRandomColor()).clear();
     for (let i = this.matrix.width(); i > -textWidth; i--) {
       let move = 0;
@@ -107,14 +107,14 @@ export class Painter {
   }
 
   async ShowImage(image: string, displayTime: number) {
-    let array = this.CreateArray(this.matrix.width());
+    const array = this.CreateArray(this.matrix.width());
     await Jimp.read(image).then((result) => {
       result.resize(this.matrix.width(), this.matrix.height());
       for (let i = 0; i < this.matrix.width(); i++) {
         for (let j = 0; j < this.matrix.height(); j++) {
-          let pixel = result.getPixelColor(j, i);
-          let rgba = Jimp.intToRGBA(pixel);
-          let color: Color = { r: rgba.r, g: rgba.g, b: rgba.b };
+          const pixel = result.getPixelColor(j, i);
+          const rgba = Jimp.intToRGBA(pixel);
+          const color: Color = { r: rgba.r, g: rgba.g, b: rgba.b };
           array[i][j] = color;
         }
       }
