@@ -84,8 +84,17 @@ export class Painter {
     this.matrix.sync();
   }
 
+  Clear(): void {
+    this.matrix.sync();
+    this.matrix.clear();
+    this.matrix.sync();
+  }
+
   PrintString(text: string): void {
-    const font = new Font("helvR12", `${process.cwd()}/fonts/helvR12.bdf`);
+    const font = new Font(
+      "helvR12",
+      `${process.cwd()}/Visualisations/fonts/helvR12.bdf`
+    );
     this.matrix.font(font);
     const textWidth = font.stringWidth(text);
     let stringsArray = chunkArray(text, 14);

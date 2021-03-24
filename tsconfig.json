@@ -20,7 +20,10 @@
     "suppressImplicitAnyIndexErrors": false,
     "strictPropertyInitialization": true,
     "types": ["node"],
-    "target": "esnext"
+    "target": "es6",
+    "outDir": "./build",
+    "strict": true,
+    "esModuleInterop": true
   },
   "exclude": ["node_modules"]
 }
