@@ -5,9 +5,9 @@ import { performance } from "perf_hooks";
 export function NextPixelsOn(iterationsNumber: number, painter: Painter) {
   let c = 0;
   console.log("Number of iterations: " + iterationsNumber);
-  let start = performance.now();
+  const start = performance.now();
   while (true) {
-    let color: Color = painter.GetRandomColor();
+    const color: Color = painter.GetRandomColor();
 
     let map: Color[][] = painter.CreateArray(32);
     for (let i = 0; i < map.length; i++) {
@@ -16,7 +16,7 @@ export function NextPixelsOn(iterationsNumber: number, painter: Painter) {
         map[i][j] = color;
         painter.Paint(map);
         if (c == iterationsNumber) {
-          let stop = performance.now();
+          const stop = performance.now();
           console.log("Time:" + (stop - start));
           return;
         }
