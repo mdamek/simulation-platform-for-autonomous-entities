@@ -49,13 +49,11 @@ app.get("/pixel/:x/:y", (req: Request, res: Response) => {
 app.post("/xinukIteration", (req: Request, res: Response) => {
   const xinukIteration: XinukIteration = ConvertBodyToXinukIteration(req.body);
   painter.PaintXinukIteration(xinukIteration);
-  console.log(req.ip);
-  console.log(req.hostname)
   res.sendStatus(200);
 });
 
 app.listen(PORT, () => {
   console.log("Server is running on port", PORT);
+  painter.PrintString("LED server is ready");
 });
 
-painter.PrintString("LED server is ready");
