@@ -48,7 +48,8 @@ app.get("/pixel/:x/:y", (req: Request, res: Response) => {
 
 app.post("/xinukIteration", (req: Request, res: Response) => {
   const xinukIteration: XinukIteration = ConvertBodyToXinukIteration(req.body);
-  painter.PaintXinukIteration(xinukIteration);
+  painter.Paint(xinukIteration.points);
+  console.log("Iteration: ", xinukIteration.iterationNumber);
   res.sendStatus(200);
 });
 

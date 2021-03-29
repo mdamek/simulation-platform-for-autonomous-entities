@@ -2,7 +2,7 @@ import { Color } from "rpi-led-matrix";
 
 export interface XinukIteration {
   iterationNumber: number;
-  points: Point[];
+  points: Color[][];
 }
 
 export interface Point {

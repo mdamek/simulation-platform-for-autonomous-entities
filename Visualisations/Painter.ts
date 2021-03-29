@@ -1,7 +1,6 @@
 import { LedMatrix, LedMatrixInstance, Color, Font } from "rpi-led-matrix";
 import { matrixOptions, runtimeOptions } from "./_config";
 import * as Jimp from "jimp";
-import { XinukIteration } from "../Models/XinukInterfaces";
 
 function findDim(a: Color[][]) {
   const mainLen = a.length;
@@ -69,9 +68,9 @@ export class Painter {
     ) {
       throw new Error(
         "Cannot paint " +
-          dimensions +
-          " on " +
-          [this.matrix.width(), this.matrix.height()]
+        dimensions +
+        " on " +
+        [this.matrix.width(), this.matrix.height()]
       );
     }
 
@@ -90,14 +89,6 @@ export class Painter {
     this.matrix.sync();
     this.Sleep(1500);
     this.Clear();
-  }
-
-  PaintXinukIteration(iteration: XinukIteration): void {
-    iteration.points.forEach((p) => {
-      this.matrix.fgColor(p.colorRGB).setPixel(p.x, p.y);
-    });
-    console.log("Iteration: ", iteration.iterationNumber);
-    this.matrix.sync();
   }
 
   Clear(): void {
