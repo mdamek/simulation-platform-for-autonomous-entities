@@ -1,5 +1,6 @@
 import { XinukIteration } from "../Models/XinukInterfaces";
 import { Color } from "rpi-led-matrix";
+import { performance } from "perf_hooks";
 
 function toColor(num: number): [number, number, number] {
   num >>>= 0;
@@ -26,4 +27,10 @@ export function ConvertBodyToXinukIteration(body: any): XinukIteration {
     iterationNumber: iterationNumber,
     points: points,
   };
+}
+
+export function CalculateFrequency(updatePerformanceFrequency: number, savedTime: number) {
+  let now = performance.now();
+  let time = ((now - savedTime) / 1000)
+  console.log("Frequency: ", Math.round(updatePerformanceFrequency / time * 100) / 100, " Hz")
 }

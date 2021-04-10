@@ -3,10 +3,14 @@ import { Painter } from "../Visualisations/Painter";
 import { PrintOwnText } from "../Visualisations/PrintText";
 import bodyParser from "body-parser";
 import { XinukIteration } from "../Models/XinukInterfaces";
-import { ConvertBodyToXinukIteration } from "./convertionHelpers";
+import { CalculateFrequency, ConvertBodyToXinukIteration } from "./helpers";
 import { FillPanelPixels } from "../Visualisations/FillPanelPixels";
+import { performance } from "perf_hooks";
 
 const PORT = 8000;
+
+let savedTime: number;
+let requestsNumber: number = 0;
 
 const app: Application = express();
 app.use(bodyParser.json());
@@ -34,7 +38,14 @@ app.get("/text/:text", (req: Request, res: Response) => {
 app.post("/xinukIteration", (req: Request, res: Response) => {
   const xinukIteration: XinukIteration = ConvertBodyToXinukIteration(req.body);
   painter.Paint(xinukIteration.points);
-  console.log("Iteration: ", xinukIteration.iterationNumber);
+  const updatePerformanceFrequency = 15;
+  if (requestsNumber % updatePerformanceFrequency == 0) {
+    if (requestsNumber != 0) {
+      CalculateFrequency(updatePerformanceFrequency, savedTime);
+    }
+    savedTime = performance.now();
+  }
+  requestsNumber++;
   res.sendStatus(200);
 });
 
