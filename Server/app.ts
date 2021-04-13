@@ -57,10 +57,10 @@ app.get("/pixelsGlobal/:shape", (req: Request, res: Response) => {
   let nodeIp4: string = "192.168.100.191";
 
   axios.all([
-    axios.get<number[][]>(`http://${nodeIp1}/pixelsLocal:${PORT}`),
-    axios.get<number[][]>(`http://${nodeIp2}/pixelsLocal:${PORT}`),
-    axios.get<number[][]>(`http://${nodeIp3}/pixelsLocal:${PORT}`),
-    axios.get<number[][]>(`http://${nodeIp4}/pixelsLocal:${PORT}`),
+    axios.get<number[][]>(`http://${nodeIp1}:${PORT}/pixelsLocal`),
+    axios.get<number[][]>(`http://${nodeIp2}:${PORT}/pixelsLocal`),
+    axios.get<number[][]>(`http://${nodeIp3}:${PORT}/pixelsLocal`),
+    axios.get<number[][]>(`http://${nodeIp4}:${PORT}/pixelsLocal`),
   ]).then(axios.spread((response1, response2, response3, response4) => {
     console.log(response1)
     console.log(response2)
