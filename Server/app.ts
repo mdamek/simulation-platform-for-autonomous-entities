@@ -3,7 +3,7 @@ import { Painter } from "../Visualisations/Painter";
 import { PrintOwnText } from "../Visualisations/PrintText";
 import bodyParser from "body-parser";
 import { XinukIteration } from "../Models/XinukInterfaces";
-import { CalculateFrequency, ConvertBodyToXinukIteration } from "./helpers";
+import { CalculateFrequency, ConvertBodyToXinukIteration, CreateMatrixByShape, FillMatrixByShapeAndSmallPieces } from "./helpers";
 import { FillPanelPixels } from "../Visualisations/FillPanelPixels";
 import { performance } from "perf_hooks";
 import axios from "axios";
@@ -56,25 +56,33 @@ app.get("/pixelsGlobal/:shape", (req: Request, res: Response) => {
   let nodeIp3: string = "192.168.100.192";
   let nodeIp4: string = "192.168.100.191";
 
+  let finalMatrix = CreateMatrixByShape(shape);
+
   axios.all([
     axios.get<number[][]>(`http://${nodeIp1}:${PORT}/pixelsLocal`),
     axios.get<number[][]>(`http://${nodeIp2}:${PORT}/pixelsLocal`),
     axios.get<number[][]>(`http://${nodeIp3}:${PORT}/pixelsLocal`),
     axios.get<number[][]>(`http://${nodeIp4}:${PORT}/pixelsLocal`),
   ]).then(axios.spread((response1, response2, response3, response4) => {
-    console.log(response1)
-    console.log(response2)
-    console.log(response3)
-    console.log(response4)
-  })).catch(error => {
+    let node1Data = response1.data;
+    let node2Data = response2.data;
+    let node3Data = response3.data;
+    let node4Data = response4.data;
+    finalMatrix = FillMatrixByShapeAndSmallPieces(shape, finalMatrix, node1Data, node2Data, node3Data, node4Data)
+    let json = JSON.stringify(finalMatrix)
+    console.table(json)
+    res.status(200).json(json);
+  }
+  )).catch(error => {
     console.log(error);
+    res.sendStatus(500).send("Internal error");
   });
-  res.send(shape)
+
 });
 
 app.get("/pixelsLocal", (req: Request, res: Response) => {
   const localState = painter.GetPixelsState();
-  res.json(localState)
+  res.status(200).json(localState)
 });
 
 app.post("/xinukIteration", (req: Request, res: Response) => {
@@ -100,4 +108,3 @@ app.listen(PORT, () => {
   console.log("Server is running on port", PORT);
   painter.PrintString("LED server is ready");
 });
-
