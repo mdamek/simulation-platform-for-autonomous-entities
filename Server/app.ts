@@ -51,7 +51,7 @@ app.get("/clearPixelsState", (req: Request, res: Response) => {
 app.get("/pixelsGlobal/:shape", (req: Request, res: Response) => {
   let shape: string = req.params["shape"];
 
-  //let nodeIp1: string = "192.168.100.180";
+  let nodeIp1: string = "192.168.100.180";
   let nodeIp2: string = "192.168.100.185";
   let nodeIp3: string = "192.168.100.192";
   let nodeIp4: string = "192.168.100.191";
@@ -61,11 +61,11 @@ app.get("/pixelsGlobal/:shape", (req: Request, res: Response) => {
     axios.get<number[][]>(`http://${nodeIp2}/pixelsLocal:${PORT}`),
     axios.get<number[][]>(`http://${nodeIp3}/pixelsLocal:${PORT}`),
     axios.get<number[][]>(`http://${nodeIp4}/pixelsLocal:${PORT}`),
-  ]).then(axios.spread((response1, response2, response3) => {
+  ]).then(axios.spread((response1, response2, response3, response4) => {
     console.log(response1)
     console.log(response2)
     console.log(response3)
-    //console.log(response4)
+    console.log(response4)
   })).catch(error => {
     console.log(error);
   });
