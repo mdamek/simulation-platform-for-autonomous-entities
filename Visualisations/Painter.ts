@@ -2,7 +2,7 @@ import { LedMatrix, LedMatrixInstance, Color, Font } from "rpi-led-matrix";
 import { matrixOptions, runtimeOptions } from "./_config";
 import * as Jimp from "jimp";
 
-function findDim(a: Color[][]) {
+function findDim(a: any[][]) {
   const mainLen = a.length;
   let subLen = a[0].length;
 
@@ -20,7 +20,6 @@ function chunkArray(myArray: string, chunk_size: number) {
 
   for (index = 0; index < arrayLength; index += chunk_size) {
     const myChunk = myArray.slice(index, index + chunk_size);
-    // Do something if you want with the group
     tempArray.push(myChunk);
   }
 
@@ -29,8 +28,18 @@ function chunkArray(myArray: string, chunk_size: number) {
 
 export class Painter {
   matrix: LedMatrixInstance;
+  pixelsState: number[][];
   constructor() {
     this.matrix = new LedMatrix(matrixOptions, runtimeOptions);
+    this.pixelsState = []
+    for (let i = 0; i < this.matrix.width(); i++) {
+      this.pixelsState[i] = new Array(this.matrix.height());
+    }
+    for (let i = 0; i < this.matrix.width(); i++) {
+      for (let j = 0; j < this.matrix.height(); j++) {
+        this.pixelsState[i][j] = 0;
+      }
+    }
   }
 
   CreateArray(dim: number): Color[][] {
@@ -73,7 +82,6 @@ export class Painter {
         [this.matrix.width(), this.matrix.height()]
       );
     }
-
     for (let i = 0; i < this.matrix.width(); i++) {
       for (let j = 0; j < this.matrix.height(); j++) {
         this.matrix
@@ -84,11 +92,43 @@ export class Painter {
     this.matrix.sync();
   }
 
+  ClearPixelsState(): void {
+    for (let i = 0; i < this.matrix.width(); i++) {
+      for (let j = 0; j < this.matrix.height(); j++) {
+        this.pixelsState[i][j] = 0;
+      }
+    }
+  }
+
+  GetPixelsState(): number[][] {
+    let tmpPixlesState: number[][] = []
+    for (let i = 0; i < this.matrix.width(); i++) {
+      tmpPixlesState[i] = new Array(this.matrix.height());
+    }
+    for (let i = 0; i < this.matrix.width(); i++) {
+      for (let j = 0; j < this.matrix.height(); j++) {
+        tmpPixlesState[j][i] = this.pixelsState[i][j];
+      }
+    }
+    return tmpPixlesState;
+  }
+
   PaintPixel(x: number, y: number): void {
-    this.matrix.fgColor({ r: 255, g: 0, b: 0 }).setPixel(x, y);
+    this.pixelsState[y][x] = 1;
+    this.PaintByOccurrencesMatrix(this.pixelsState, { r: 255, g: 0, b: 0 })
+  }
+
+  PaintByOccurrencesMatrix(matrix: number[][], color: Color): void {
+    for (let i = 0; i < this.matrix.width(); i++) {
+      for (let j = 0; j < this.matrix.height(); j++) {
+        if (matrix[i][j] == 1) {
+          this.matrix
+            .fgColor(color)
+            .setPixel(j, i);
+        }
+      }
+    }
     this.matrix.sync();
-    this.Sleep(1500);
-    this.Clear();
   }
 
   Clear(): void {
