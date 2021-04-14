@@ -69,9 +69,7 @@ app.get("/pixelsGlobal/:shape", (req: Request, res: Response) => {
     let node3Data = response3.data;
     let node4Data = response4.data;
     finalMatrix = FillMatrixByShapeAndSmallPieces(shape, finalMatrix, node1Data, node2Data, node3Data, node4Data)
-    let json = JSON.stringify(finalMatrix)
-    console.table(json)
-    res.status(200).json(json);
+    res.status(200).json(finalMatrix);
   }
   )).catch(error => {
     console.log(error);
