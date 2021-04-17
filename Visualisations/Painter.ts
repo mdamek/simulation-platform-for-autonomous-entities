@@ -120,6 +120,7 @@ export class Painter {
   }
 
   PaintByOccurrencesMatrix(matrix: number[][], color: Color): void {
+    this.matrix.clear()
     for (let i = 0; i < this.matrix.width(); i++) {
       for (let j = 0; j < this.matrix.height(); j++) {
         if (matrix[i][j] == 1) {
