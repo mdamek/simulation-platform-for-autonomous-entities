@@ -85,6 +85,7 @@ export class Painter {
     for (let i = 0; i < this.matrix.width(); i++) {
       for (let j = 0; j < this.matrix.height(); j++) {
         this.matrix
+          .brightness(80)
           .fgColor(colorMap[i][j] ? colorMap[i][j] : { r: 0, g: 0, b: 0 })
           .setPixel(j, i);
       }
@@ -123,6 +124,7 @@ export class Painter {
       for (let j = 0; j < this.matrix.height(); j++) {
         if (matrix[i][j] == 1) {
           this.matrix
+            .brightness(80)
             .fgColor(color)
             .setPixel(j, i);
         }
