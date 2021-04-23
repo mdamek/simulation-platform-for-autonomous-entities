@@ -1,12 +1,13 @@
+import { CalculateFrequency, ConvertBodyToXinukIteration, CreateMatrixByShape, FillMatrixByShapeAndSmallPieces } from "./helpers";
 import express, { Application, Request, Response } from "express";
+
+import { FillPanelPixels } from "../Visualisations/FillPanelPixels";
 import { Painter } from "../Visualisations/Painter";
 import { PrintOwnText } from "../Visualisations/PrintText";
-import bodyParser from "body-parser";
 import { XinukIteration } from "../Models/XinukInterfaces";
-import { CalculateFrequency, ConvertBodyToXinukIteration, CreateMatrixByShape, FillMatrixByShapeAndSmallPieces } from "./helpers";
-import { FillPanelPixels } from "../Visualisations/FillPanelPixels";
-import { performance } from "perf_hooks";
 import axios from "axios";
+import bodyParser from "body-parser";
+import { performance } from "perf_hooks";
 
 const PORT = 8000;
 
@@ -51,10 +52,10 @@ app.get("/clearPixelsState", (req: Request, res: Response) => {
 app.get("/pixelsGlobal/:shape", (req: Request, res: Response) => {
   let shape: string = req.params["shape"];
 
-  let nodeIp1: string = "192.168.100.180";
-  let nodeIp2: string = "192.168.100.185";
-  let nodeIp3: string = "192.168.100.192";
-  let nodeIp4: string = "192.168.100.191";
+  let nodeIp1: string = "192.168.1.87";
+  let nodeIp2: string = "192.168.1.172";
+  let nodeIp3: string = "192.168.1.205";
+  let nodeIp4: string = "192.168.1.196";
 
   let finalMatrix = CreateMatrixByShape(shape);
 
@@ -63,7 +64,7 @@ app.get("/pixelsGlobal/:shape", (req: Request, res: Response) => {
     axios.get<number[][]>(`http://${nodeIp2}:${PORT}/pixelsLocal`),
     axios.get<number[][]>(`http://${nodeIp3}:${PORT}/pixelsLocal`),
     axios.get<number[][]>(`http://${nodeIp4}:${PORT}/pixelsLocal`),
-  ]).then(axios.spread((response1, response2, response3, response4) => {
+  ]).then(axios.spread((response1: { data: any; }, response2: { data: any; }, response3: { data: any; }, response4: { data: any; }) => {
     let node1Data = response1.data;
     let node2Data = response2.data;
     let node3Data = response3.data;
@@ -71,7 +72,7 @@ app.get("/pixelsGlobal/:shape", (req: Request, res: Response) => {
     finalMatrix = FillMatrixByShapeAndSmallPieces(shape, finalMatrix, node1Data, node2Data, node3Data, node4Data)
     res.status(200).json(finalMatrix);
   }
-  )).catch(error => {
+  )).catch((error: any) => {
     console.log(error);
     res.sendStatus(500).send("Internal error");
   });
