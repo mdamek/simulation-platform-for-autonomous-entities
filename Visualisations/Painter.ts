@@ -1,6 +1,7 @@
-import { LedMatrix, LedMatrixInstance, Color, Font } from "rpi-led-matrix";
-import { matrixOptions, runtimeOptions } from "./_config";
 import * as Jimp from "jimp";
+
+import { Color, Font, LedMatrix, LedMatrixInstance } from "rpi-led-matrix";
+import { matrixOptions, runtimeOptions } from "./_config";
 
 function findDim(a: any[][]) {
   const mainLen = a.length;
@@ -69,7 +70,7 @@ export class Painter {
     };
   }
 
-  Paint(colorMap: Color[][]): void {
+  Paint(colorMap: Color[][], brightness = 80): void {
     const dimensions = findDim(colorMap);
     if (
       dimensions[0] < this.matrix.width() ||
@@ -85,7 +86,7 @@ export class Painter {
     for (let i = 0; i < this.matrix.width(); i++) {
       for (let j = 0; j < this.matrix.height(); j++) {
         this.matrix
-          .brightness(80)
+          .brightness(brightness)
           .fgColor(colorMap[i][j] ? colorMap[i][j] : { r: 0, g: 0, b: 0 })
           .setPixel(j, i);
       }

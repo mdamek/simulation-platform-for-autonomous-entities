@@ -30,11 +30,12 @@ app.get("/test", (req: Request, res: Response) => {
   res.sendStatus(200);
 });
 
-app.get("/fillPanel/:r/:g/:b", (req: Request, res: Response) => {
+app.get("/fillPanel/:r/:g/:b/:l", (req: Request, res: Response) => {
   let r: number = +req.params["r"];
   let g: number = +req.params["g"];
   let b: number = +req.params["b"];
-  FillPanelPixels(5, painter, r, g, b);
+  let l: number = +req.params["l"];
+  FillPanelPixels(5, painter, r, g, b, l);
   res.sendStatus(200);
 } );
 
