@@ -1,13 +1,24 @@
-import { performance } from "perf_hooks";
-import { Painter } from "./Painter";
 import { Color } from "rpi-led-matrix";
+import { Painter } from "./Painter";
+import { performance } from "perf_hooks";
 
-export function FillPanelPixels(iterationsNumber: number, painter: Painter) {
+export function FillPanelPixels(
+  iterationsNumber: number,
+  painter: Painter,
+  r: number = 0,
+  g: number = 0,
+  b: number = 0
+) {
   let c = 0;
   console.log("Number of iterations: " + iterationsNumber);
   const start = performance.now();
+  var color: Color;
   while (c < iterationsNumber) {
-    const color: Color = painter.GetRandomColor();
+    if (r != 0 || g != 0 || b != 0) {
+      color = { r: r, g: g, b: b };
+    } else {
+      color = painter.GetRandomColor();
+    }
 
     const map: Color[][] = painter.CreateArray(32);
 
