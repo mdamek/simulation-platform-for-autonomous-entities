@@ -32,17 +32,19 @@ function chunkArray(myArray: string, chunk_size: number) {
 export class Painter {
   matrix: LedMatrixInstance;
   color: Color;
+  avaliableColors: Map<string, string>;
   pixelsState: Color[][];
   constructor() {
-    this.color = {r:0, g:0, b:0}
+    this.color = { r: 0, g: 0, b: 0 };
     this.matrix = new LedMatrix(matrixOptions, runtimeOptions);
-    this.pixelsState = []
+    this.avaliableColors = new Map();
+    this.pixelsState = [];
     for (let i = 0; i < this.matrix.width(); i++) {
       this.pixelsState[i] = new Array(this.matrix.height());
     }
     for (let i = 0; i < this.matrix.width(); i++) {
       for (let j = 0; j < this.matrix.height(); j++) {
-        this.pixelsState[i][j] = {r: 0, g:0, b: 0};
+        this.pixelsState[i][j] = { r: 0, g: 0, b: 0 };
       }
     }
   }
@@ -82,9 +84,9 @@ export class Painter {
     ) {
       throw new Error(
         "Cannot paint " +
-        dimensions +
-        " on " +
-        [this.matrix.width(), this.matrix.height()]
+          dimensions +
+          " on " +
+          [this.matrix.width(), this.matrix.height()]
       );
     }
     for (let i = 0; i < this.matrix.width(); i++) {
@@ -99,19 +101,30 @@ export class Painter {
   }
 
   SetColor(color: string): void {
-    this.color = HexToRgb(color)
+    let newColor = HexToRgb(color);
+    if (Array.from(this.avaliableColors.values()).includes(newColor)) {
+      this.color = newColor;
+    } else {
+      console.log("Color " + color + " is not avaliable")
+    }
+  }
+
+  SetAvaliableColors(colors: Map<string, string>): void {
+    for (let entry of colors.entries()) {
+      this.avaliableColors.set(entry[0], entry[1]);
+    }
   }
 
   ClearPixelsState(): void {
     for (let i = 0; i < this.matrix.width(); i++) {
       for (let j = 0; j < this.matrix.height(); j++) {
-        this.pixelsState[i][j] = {r: 0, g:0, b: 0};
+        this.pixelsState[i][j] = { r: 0, g: 0, b: 0 };
       }
     }
   }
 
   GetPixelsState(): Color[][] {
-    let tmpPixlesState: Color[][] = []
+    let tmpPixlesState: Color[][] = [];
     for (let i = 0; i < this.matrix.width(); i++) {
       tmpPixlesState[i] = new Array(this.matrix.height());
     }
@@ -125,18 +138,15 @@ export class Painter {
 
   PaintPixel(x: number, y: number): void {
     this.pixelsState[y][x] = this.color;
-    this.PaintByOccurrencesMatrix(this.pixelsState)
+    this.PaintByOccurrencesMatrix(this.pixelsState);
   }
 
   PaintByOccurrencesMatrix(matrix: Color[][]): void {
-    this.matrix.clear()
+    this.matrix.clear();
     for (let i = 0; i < this.matrix.width(); i++) {
       for (let j = 0; j < this.matrix.height(); j++) {
-        if (matrix[i][j] != {r: 0, g: 0, b:0}) {
-          this.matrix
-            .brightness(60)
-            .fgColor(matrix[i][j])
-            .setPixel(j, i)
+        if (matrix[i][j] != { r: 0, g: 0, b: 0 }) {
+          this.matrix.brightness(60).fgColor(matrix[i][j]).setPixel(j, i);
         }
       }
     }
