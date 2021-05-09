@@ -34,6 +34,7 @@ export class Painter {
   color: Color;
   pixelsState: Color[][];
   constructor() {
+    this.color = {r:0, g:0, b:0}
     this.matrix = new LedMatrix(matrixOptions, runtimeOptions);
     this.pixelsState = []
     for (let i = 0; i < this.matrix.width(); i++) {
