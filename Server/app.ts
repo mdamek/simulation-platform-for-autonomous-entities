@@ -66,6 +66,9 @@ app.post("/configureDrawing", (req: Request, res: Response) => {
   nodes = req.body["nodes"]
   xNodes = req.body["xNodes"]
   yNodes = req.body["yNodes"]
+  console.log(nodes)
+  console.log(xNodes)
+  console.log(yNodes)
   painter.SetAvaliableColors(req.body["avaliableColors"])
   res.sendStatus(200);
 })
