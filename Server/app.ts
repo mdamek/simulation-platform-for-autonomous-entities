@@ -69,6 +69,7 @@ app.post("/configureDrawing", (req: Request, res: Response) => {
   console.log(nodes)
   console.log(xNodes)
   console.log(yNodes)
+  painter.ClearPixelsState();
   painter.SetAvaliableColors(req.body["avaliableColors"])
   res.sendStatus(200);
 })
