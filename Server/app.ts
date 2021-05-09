@@ -24,9 +24,9 @@ app.use(
 
 const painter = new Painter();
 
-//let nodes: string[] = []
-//let xNodes: number = 0
-//let yNodes: number = 0
+let nodes: string[] = []
+let xNodes: number = 0
+let yNodes: number = 0
 
 app.get("/test", (req: Request, res: Response) => {
   FillPanelPixels(5, painter);
@@ -63,16 +63,10 @@ app.get("/clearPixelsState", (_req: Request, res: Response) => {
 });
 
 app.post("/configureDrawing", (req: Request, res: Response) => {
-  let nodes_body = req.body["nodes"]
-  let xNodes_body = req.body["xNodes"]
-  let yNodes_body = req.body["yNodes"]
-  let colors_with_types = req.body["avaliableColors"]
-  console.log(nodes_body)
-  console.log(xNodes_body)
-  console.log(yNodes_body)
-  console.log(colors_with_types)
-  console.log(req.body)
-  painter.SetAvaliableColors(colors_with_types)
+  nodes = req.body["nodes"]
+  xNodes = req.body["xNodes"]
+  yNodes = req.body["yNodes"]
+  painter.SetAvaliableColors(req.body["avaliableColors"])
   res.sendStatus(200);
 })
 

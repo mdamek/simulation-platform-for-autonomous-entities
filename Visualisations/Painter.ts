@@ -4,6 +4,7 @@ import { Color, Font, LedMatrix, LedMatrixInstance } from "rpi-led-matrix";
 import { matrixOptions, runtimeOptions } from "./_config";
 
 import { HexToRgb } from "../Server/helpers";
+import { print } from "jimp";
 
 function findDim(a: any[][]) {
   const mainLen = a.length;
@@ -112,6 +113,7 @@ export class Painter {
   SetAvaliableColors(colors: Map<string, string>): void {
     for (let entry of colors.entries()) {
       let newColor = HexToRgb(entry[1]);
+      print(newColor)
       this.avaliableColors.set(entry[0], newColor);
     }
   }
