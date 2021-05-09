@@ -110,7 +110,10 @@ export class Painter {
   }
 
   SetAvaliableColors(colors: Map<string, string>): void {
+    console.log(colors)
     for (let entry of colors.entries()) {
+      console.log("ENTRY")
+      console.log(entry)
       let newColor = HexToRgb(entry[1]);
       console.log(newColor)
       this.avaliableColors.set(entry[0], newColor);
