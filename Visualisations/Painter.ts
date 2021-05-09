@@ -110,13 +110,11 @@ export class Painter {
   }
 
   SetAvaliableColors(colors: any[]): void {
+    this.avaliableColors.clear()
     for (let color of colors) {
       let key = String(Object.keys(color)[0])
       let hexColor = String(Object.values(color)[0])
-      console.log(key)
-      console.log(hexColor)
       let newColor = HexToRgb(hexColor);
-      console.log(newColor)
       this.avaliableColors.set(key, newColor);
     }
   }
