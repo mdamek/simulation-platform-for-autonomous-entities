@@ -16,7 +16,11 @@ export function HexToRgb(hex : string): Color {
     r: parseInt(result[1], 16),
     g: parseInt(result[2], 16),
     b: parseInt(result[3], 16)
-  } : null;
+  } : <Color>{
+    r: 0,
+    g: 0,
+    b: 0
+  };
 }
 
 export function ConvertBodyToXinukIteration(body: any): XinukIteration {
