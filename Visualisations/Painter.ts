@@ -32,7 +32,7 @@ function chunkArray(myArray: string, chunk_size: number) {
 export class Painter {
   matrix: LedMatrixInstance;
   color: Color;
-  avaliableColors: Map<string, string>;
+  avaliableColors: Map<string, Color>;
   pixelsState: Color[][];
   constructor() {
     this.color = { r: 0, g: 0, b: 0 };
@@ -111,7 +111,8 @@ export class Painter {
 
   SetAvaliableColors(colors: Map<string, string>): void {
     for (let entry of colors.entries()) {
-      this.avaliableColors.set(entry[0], entry[1]);
+      let newColor = HexToRgb(entry[1]);
+      this.avaliableColors.set(entry[0], newColor);
     }
   }
 
