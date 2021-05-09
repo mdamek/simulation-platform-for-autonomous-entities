@@ -53,8 +53,14 @@ app.get("/paintPixel/:x/:y", (req: Request, res: Response) => {
   res.sendStatus(200);
 });
 
-app.get("/clearPixelsState", (req: Request, res: Response) => {
+app.get("/clearPixelsState", (_req: Request, res: Response) => {
   painter.ClearPixelsState();
+  res.sendStatus(200);
+});
+
+app.get("/setColor/:color", (req: Request, res: Response) => {
+  let color: string = req.params["color"];
+  painter.SetColor(color);
   res.sendStatus(200);
 });
 

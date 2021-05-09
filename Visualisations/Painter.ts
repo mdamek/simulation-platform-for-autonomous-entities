@@ -3,6 +3,8 @@ import * as Jimp from "jimp";
 import { Color, Font, LedMatrix, LedMatrixInstance } from "rpi-led-matrix";
 import { matrixOptions, runtimeOptions } from "./_config";
 
+import { HexToRgb } from "../Server/helpers";
+
 function findDim(a: any[][]) {
   const mainLen = a.length;
   let subLen = a[0].length;
@@ -29,7 +31,8 @@ function chunkArray(myArray: string, chunk_size: number) {
 
 export class Painter {
   matrix: LedMatrixInstance;
-  pixelsState: number[][];
+  color: Color;
+  pixelsState: Color[][];
   constructor() {
     this.matrix = new LedMatrix(matrixOptions, runtimeOptions);
     this.pixelsState = []
@@ -38,7 +41,7 @@ export class Painter {
     }
     for (let i = 0; i < this.matrix.width(); i++) {
       for (let j = 0; j < this.matrix.height(); j++) {
-        this.pixelsState[i][j] = 0;
+        this.pixelsState[i][j] = {r: 0, g:0, b: 0};
       }
     }
   }
@@ -70,7 +73,7 @@ export class Painter {
     };
   }
 
-  Paint(colorMap: Color[][], brightness = 80): void {
+  Paint(colorMap: Color[][], brightness = 60): void {
     const dimensions = findDim(colorMap);
     if (
       dimensions[0] < this.matrix.width() ||
@@ -94,16 +97,20 @@ export class Painter {
     this.matrix.sync();
   }
 
+  SetColor(color: string): void {
+    this.color = HexToRgb(color)
+  }
+
   ClearPixelsState(): void {
     for (let i = 0; i < this.matrix.width(); i++) {
       for (let j = 0; j < this.matrix.height(); j++) {
-        this.pixelsState[i][j] = 0;
+        this.pixelsState[i][j] = {r: 0, g:0, b: 0};
       }
     }
   }
 
-  GetPixelsState(): number[][] {
-    let tmpPixlesState: number[][] = []
+  GetPixelsState(): Color[][] {
+    let tmpPixlesState: Color[][] = []
     for (let i = 0; i < this.matrix.width(); i++) {
       tmpPixlesState[i] = new Array(this.matrix.height());
     }
@@ -116,19 +123,19 @@ export class Painter {
   }
 
   PaintPixel(x: number, y: number): void {
-    this.pixelsState[y][x] = 1;
-    this.PaintByOccurrencesMatrix(this.pixelsState, { r: 255, g: 0, b: 0 })
+    this.pixelsState[y][x] = this.color;
+    this.PaintByOccurrencesMatrix(this.pixelsState)
   }
 
-  PaintByOccurrencesMatrix(matrix: number[][], color: Color): void {
+  PaintByOccurrencesMatrix(matrix: Color[][]): void {
     this.matrix.clear()
     for (let i = 0; i < this.matrix.width(); i++) {
       for (let j = 0; j < this.matrix.height(); j++) {
-        if (matrix[i][j] == 1) {
+        if (matrix[i][j] != {r: 0, g: 0, b:0}) {
           this.matrix
-            .brightness(80)
-            .fgColor(color)
-            .setPixel(j, i);
+            .brightness(60)
+            .fgColor(matrix[i][j])
+            .setPixel(j, i)
         }
       }
     }

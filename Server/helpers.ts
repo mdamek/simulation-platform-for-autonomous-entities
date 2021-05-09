@@ -10,6 +10,15 @@ function toColor(num: number): [number, number, number] {
   return [r, g, b];
 }
 
+export function HexToRgb(hex : string): Color {
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? <Color> {
+    r: parseInt(result[1], 16),
+    g: parseInt(result[2], 16),
+    b: parseInt(result[3], 16)
+  } : null;
+}
+
 export function ConvertBodyToXinukIteration(body: any): XinukIteration {
   let iterationNumber: number = body.iteration as number;
   let points: Color[][] = body.points.map((a: any[]) =>
