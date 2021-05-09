@@ -112,7 +112,7 @@ export class Painter {
   SetAvaliableColors(colors: any[]): void {
     for (let color of colors) {
       let key = color.keys()[0]
-      let hexColor = String(this.color.values()[0])
+      let hexColor = String(color.values()[0])
       console.log(key)
       console.log(hexColor)
       let newColor = HexToRgb(hexColor);
