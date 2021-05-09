@@ -24,9 +24,9 @@ app.use(
 
 const painter = new Painter();
 
-let nodes: string[] = []
-let xNodes: number = 0
-let yNodes: number = 0
+//let nodes: string[] = []
+//let xNodes: number = 0
+//let yNodes: number = 0
 
 app.get("/test", (req: Request, res: Response) => {
   FillPanelPixels(5, painter);
