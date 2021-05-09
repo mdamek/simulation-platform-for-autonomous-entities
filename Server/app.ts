@@ -62,7 +62,7 @@ app.get("/clearPixelsState", (_req: Request, res: Response) => {
   res.sendStatus(200);
 });
 
-app.post("configureDrawing", (req: Request, res: Response) => {
+app.post("/configureDrawing", (req: Request, res: Response) => {
   let nodes_body = req.body["nodes"]
   let xNodes_body = req.body["xNodes"]
   let yNodes_body = req.body["yNodes"]
