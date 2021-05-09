@@ -60,6 +60,7 @@ app.get("/clearPixelsState", (_req: Request, res: Response) => {
 
 app.get("/setColor/:color", (req: Request, res: Response) => {
   let color: string = req.params["color"];
+  color = "#" + color;
   painter.SetColor(color);
   res.sendStatus(200);
 });
