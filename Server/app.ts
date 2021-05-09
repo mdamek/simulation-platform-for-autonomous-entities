@@ -71,6 +71,7 @@ app.post("/configureDrawing", (req: Request, res: Response) => {
   console.log(xNodes_body)
   console.log(yNodes_body)
   console.log(colors_with_types)
+  console.log(req.body)
   painter.SetAvaliableColors(colors_with_types)
   res.sendStatus(200);
 })
