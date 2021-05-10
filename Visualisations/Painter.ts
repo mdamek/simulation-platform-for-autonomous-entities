@@ -34,6 +34,7 @@ export class Painter {
   color: Color;
   avaliableColors: Map<string, Color>;
   pixelsState: Color[][];
+  brightness: number = 50;
   constructor() {
     this.color = { r: 0, g: 0, b: 0 };
     this.matrix = new LedMatrix(matrixOptions, runtimeOptions);
@@ -76,7 +77,7 @@ export class Painter {
     };
   }
 
-  Paint(colorMap: Color[][], brightness = 60): void {
+  Paint(colorMap: Color[][]): void {
     const dimensions = findDim(colorMap);
     if (
       dimensions[0] < this.matrix.width() ||
@@ -92,7 +93,7 @@ export class Painter {
     for (let i = 0; i < this.matrix.width(); i++) {
       for (let j = 0; j < this.matrix.height(); j++) {
         this.matrix
-          .brightness(brightness)
+          .brightness(this.brightness)
           .fgColor(colorMap[i][j] ? colorMap[i][j] : { r: 0, g: 0, b: 0 })
           .setPixel(j, i);
       }
@@ -150,7 +151,7 @@ export class Painter {
     for (let i = 0; i < this.matrix.width(); i++) {
       for (let j = 0; j < this.matrix.height(); j++) {
         if (matrix[i][j] != { r: 0, g: 0, b: 0 }) {
-          this.matrix.brightness(60).fgColor(matrix[i][j]).setPixel(j, i);
+          this.matrix.brightness(this.brightness).fgColor(matrix[i][j]).setPixel(j, i);
         }
       }
     }
