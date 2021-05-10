@@ -7,8 +7,7 @@ export function FillPanelPixels(
   painter: Painter,
   r: number = 0,
   g: number = 0,
-  b: number = 0,
-  l: number = 100
+  b: number = 0
 ) {
   let c = 0;
   console.log("Number of iterations: " + iterationsNumber);
@@ -28,7 +27,7 @@ export function FillPanelPixels(
         map[i][j] = color;
       }
     }
-    painter.Paint(map, l);
+    painter.Paint(map);
     painter.Sleep(1000);
     c++;
   }
