@@ -23,6 +23,22 @@ export function HexToRgb(hex : string): Color {
   };
 }
 
+export function componentToHex(c: number) {
+  var hex = c.toString(16);
+  return hex.length == 1 ? "0" + hex : hex;
+}
+
+export function rgbToHex(r: number, g: number, b: number) {
+  return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+}
+
+export function getByValue(map: any, searchValue: any) {
+  for (let [key, value] of map.entries()) {
+    if (value === searchValue)
+      return key;
+  }
+}
+
 export function ConvertBodyToXinukIteration(body: any): XinukIteration {
   let iterationNumber: number = body.iteration as number;
   let points: Color[][] = body.points.map((a: any[]) =>

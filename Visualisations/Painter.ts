@@ -1,9 +1,8 @@
 import * as Jimp from "jimp";
 
 import { Color, Font, LedMatrix, LedMatrixInstance } from "rpi-led-matrix";
+import { HexToRgb, getByValue, rgbToHex } from "../Server/helpers";
 import { matrixOptions, runtimeOptions } from "./_config";
-
-import { HexToRgb } from "../Server/helpers";
 
 function findDim(a: any[][]) {
   const mainLen = a.length;
@@ -128,14 +127,17 @@ export class Painter {
     }
   }
 
-  GetPixelsState(): Color[][] {
-    let tmpPixlesState: Color[][] = [];
+  GetPixelsState(): string[][] {
+    let tmpPixlesState: string[][] = [];
     for (let i = 0; i < this.matrix.width(); i++) {
       tmpPixlesState[i] = new Array(this.matrix.height());
     }
     for (let i = 0; i < this.matrix.width(); i++) {
       for (let j = 0; j < this.matrix.height(); j++) {
-        tmpPixlesState[j][i] = this.pixelsState[i][j];
+        let rgbColor = this.pixelsState[i][j]
+        let hexColor = rgbToHex(rgbColor.r, rgbColor.g, rgbColor.b)
+        let typeToPaint = getByValue(this.avaliableColors, hexColor)  
+        tmpPixlesState[j][i] = typeToPaint;
       }
     }
     return tmpPixlesState;
