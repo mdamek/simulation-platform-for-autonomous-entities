@@ -1,8 +1,6 @@
 import {
   CalculateFrequency,
   ConvertBodyToXinukIteration,
-  CreateMatrixByShape,
-  FillMatrixByShapeAndSmallPieces,
 } from "./helpers";
 import express, { Application, Request, Response } from "express";
 
@@ -105,7 +103,18 @@ app.get("/pixelsGlobal", (req: Request, res: Response) => {
         .get<Color[][]>(`http://${node}:${PORT}/pixelsLocal`)
         .then((response: { data: Color[][] }) => {
           let responseMatrix = response.data;
-          console.log("x: ", x, "y: ", y, "responseMatrix", responseMatrix, "i: ", responseMatrix.length, "j: ", responseMatrix[0].length)
+          console.log(
+            "x: ",
+            x,
+            "y: ",
+            y,
+            "responseMatrix",
+            responseMatrix,
+            "i: ",
+            responseMatrix.length,
+            "j: ",
+            responseMatrix[0].length
+          );
           for (let i = 0; i < responseMatrix.length; i++) {
             for (let j = 0; j < responseMatrix[0].length; j++) {
               finalArray[i + panelWidth * x][j + panelHeight * y] =
@@ -116,45 +125,9 @@ app.get("/pixelsGlobal", (req: Request, res: Response) => {
     }
   }
 
-  console.log("Final Array: ", finalArray)
+  console.log("Final Array: ", finalArray);
 
-  //let finalMatrix = CreateMatrixByShape(shape);
-
-  axios
-    .all([
-      axios.get<number[][]>(`http://${nodeIp1}:${PORT}/pixelsLocal`),
-      axios.get<number[][]>(`http://${nodeIp2}:${PORT}/pixelsLocal`),
-      axios.get<number[][]>(`http://${nodeIp3}:${PORT}/pixelsLocal`),
-      axios.get<number[][]>(`http://${nodeIp4}:${PORT}/pixelsLocal`),
-    ])
-    .then(
-      axios.spread(
-        (
-          response1: { data: any },
-          response2: { data: any },
-          response3: { data: any },
-          response4: { data: any }
-        ) => {
-          let node1Data = response1.data;
-          let node2Data = response2.data;
-          let node3Data = response3.data;
-          let node4Data = response4.data;
-          finalMatrix = FillMatrixByShapeAndSmallPieces(
-            shape,
-            finalMatrix,
-            node1Data,
-            node2Data,
-            node3Data,
-            node4Data
-          );
-          res.status(200).json(finalMatrix);
-        }
-      )
-    )
-    .catch((error: any) => {
-      console.log(error);
-      res.sendStatus(500).send("Internal error");
-    });
+  res.status(200).json(finalArray);
 });
 
 app.get("/pixelsLocal", (req: Request, res: Response) => {
