@@ -28,6 +28,16 @@ export function componentToHex(c: number) {
   return hex.length == 1 ? "0" + hex : hex;
 }
 
+export function ifColorCollectionContainsColor(color: Color, collection: Map<string, Color>): boolean{
+  for (let [, value] of collection) {
+    if (value.r == color.r && value.g == color.g && value.b == color.b){
+      return true;
+    }
+  }
+  return false;
+
+}
+
 export function rgbToHex(r: number, g: number, b: number) {
   return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
 }

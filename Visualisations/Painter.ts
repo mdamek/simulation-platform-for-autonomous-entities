@@ -1,7 +1,7 @@
 import * as Jimp from "jimp";
 
 import { Color, Font, LedMatrix, LedMatrixInstance } from "rpi-led-matrix";
-import { HexToRgb, getByValue, rgbToHex } from "../Server/helpers";
+import { HexToRgb, getByValue, ifColorCollectionContainsColor, rgbToHex } from "../Server/helpers";
 import { matrixOptions, runtimeOptions } from "./_config";
 
 function findDim(a: any[][]) {
@@ -105,7 +105,7 @@ export class Painter {
     let newColor = HexToRgb(color);
     console.log("Requested color in RGB: ", newColor)
     console.log("Avaliable colors: ", this.avaliableColors.values())
-    if (Array.from(this.avaliableColors.values()).includes(newColor)) {
+    if (ifColorCollectionContainsColor(newColor, this.avaliableColors)) {
       this.color = newColor;
     } else {
       console.log("Color " + color + " is not avaliable")
