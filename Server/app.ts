@@ -100,10 +100,12 @@ app.get("/pixelsGlobal", (req: Request, res: Response) => {
   for (let x = 0; x < xNodes; x++) {
     for (let y = 0; y < yNodes; y++) {
       let node = nodes[indexOfNode];
+      indexOfNode++;
       axios
         .get<Color[][]>(`http://${node}:${PORT}/pixelsLocal`)
         .then((response: { data: Color[][] }) => {
           let responseMatrix = response.data;
+          console.log("x: ", x, "y: ", y, "responseMatrix", responseMatrix, "i: ", responseMatrix.length, "j: ", responseMatrix[0].length)
           for (let i = 0; i < responseMatrix.length; i++) {
             for (let j = 0; j < responseMatrix[0].length; j++) {
               finalArray[i + panelWidth * x][j + panelHeight * y] =
@@ -113,6 +115,8 @@ app.get("/pixelsGlobal", (req: Request, res: Response) => {
         });
     }
   }
+
+  console.log("Final Array: ", finalArray)
 
   //let finalMatrix = CreateMatrixByShape(shape);
 
