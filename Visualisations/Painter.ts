@@ -117,6 +117,7 @@ export class Painter {
       let newColor = HexToRgb(hexColor);
       this.avaliableColors.set(key, newColor);
     }
+    console.log("New avaliable colors: ", this.avaliableColors)
   }
 
   ClearPixelsState(): void {

@@ -77,6 +77,7 @@ app.post("/configureDrawing", (req: Request, res: Response) => {
   console.log(yNodes);
   console.log(panelWidth);
   console.log(panelHeight);
+  console.log(req.body["avaliableColors"]);
   painter.ClearPixelsState();
   painter.SetAvaliableColors(req.body["avaliableColors"]);
   res.sendStatus(200);
