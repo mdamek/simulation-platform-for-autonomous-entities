@@ -100,8 +100,8 @@ app.get("/pixelsGlobal", (req: Request, res: Response) => {
       let node = nodes[indexOfNode];
       indexOfNode++;
       axios
-        .get<Color[][]>(`http://${node}:${PORT}/pixelsLocal`)
-        .then((response: { data: Color[][] }) => {
+        .get<string[][]>(`http://${node}:${PORT}/pixelsLocal`)
+        .then((response: { data: string[][] }) => {
           let responseMatrix = response.data;
           console.log(
             "x: ",
