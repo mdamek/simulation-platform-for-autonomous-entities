@@ -91,7 +91,11 @@ app.get("/setColor/:color", (req: Request, res: Response) => {
 });
 
 app.get("/pixelsGlobal", (req: Request, res: Response) => {
+
   let finalArray: string[][] = [];
+  for (let r = 0; r < panelWidth; r++) {
+    finalArray[r] = new Array(panelHeight);
+  }
 
   let indexOfNode = 0;
 
@@ -113,7 +117,7 @@ app.get("/pixelsGlobal", (req: Request, res: Response) => {
             "j: ",
             responseMatrix[0].length
           );
-          console.table(responseMatrix)
+          console.log("[0,0!: ", responseMatrix[0][0])
           for (let i = 0; i < responseMatrix.length; i++) {
             for (let j = 0; j < responseMatrix[0].length; j++) {
               finalArray[i + panelWidth * x][j + panelHeight * y] =
