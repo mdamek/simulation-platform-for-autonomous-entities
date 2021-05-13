@@ -72,12 +72,11 @@ app.post("/configureDrawing", (req: Request, res: Response) => {
   yNodes = req.body["yNodes"];
   panelWidth = req.body["panelWidth"];
   panelHeight = req.body["panelHeight"];
-  console.log(nodes);
-  console.log(xNodes);
-  console.log(yNodes);
-  console.log(panelWidth);
-  console.log(panelHeight);
-  console.log(req.body["avaliableColors"]);
+  console.log("Nodes: ", nodes);
+  console.log("xNodes: ", xNodes);
+  console.log("yNodes: ",yNodes);
+  console.log("panelWidth: ", panelWidth);
+  console.log("panelHeight: ", panelHeight);
   painter.ClearPixelsState();
   painter.SetAvaliableColors(req.body["avaliableColors"]);
   res.sendStatus(200);
@@ -115,15 +114,10 @@ app.get("/pixelsGlobal", async (req: Request, res: Response) => {
             "y: ",
             y
           );
-          console.log("[0,0!: ", responseMatrix[0][0])
           for (let i = 0; i < responseMatrix.length; i++) {
             for (let j = 0; j < responseMatrix[0].length; j++) {
               let xIndex = i + (panelWidth * x)
               let yIndex = j + (panelHeight * y)
-              console.log("i ", i)
-              console.log("j ", j)
-              console.log("xIndex ", xIndex)
-              console.log("yIndex ", yIndex)
               finalArray[yIndex][xIndex] = responseMatrix[i][j];
             }
           }
@@ -133,8 +127,6 @@ app.get("/pixelsGlobal", async (req: Request, res: Response) => {
         });
     }
   }
-
-  console.table(finalArray)
 
   res.status(200).json(finalArray);
 });
