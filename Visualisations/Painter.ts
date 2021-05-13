@@ -101,7 +101,10 @@ export class Painter {
   }
 
   SetColor(color: string): void {
+    console.log("Requested color: ", color)
     let newColor = HexToRgb(color);
+    console.log("Requested color in RGB: ", newColor)
+    console.log("Avaliable colors: ", this.avaliableColors.values())
     if (Array.from(this.avaliableColors.values()).includes(newColor)) {
       this.color = newColor;
     } else {
