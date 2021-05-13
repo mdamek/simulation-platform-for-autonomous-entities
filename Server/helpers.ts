@@ -44,7 +44,8 @@ export function rgbToHex(r: number, g: number, b: number) {
 
 export function getByValue(map: any, searchValue: any) {
   for (let [key, value] of map.entries()) {
-    if (value === searchValue)
+    let hexColor = rgbToHex(value.r, value.g, value.b)
+    if (hexColor === searchValue)
       return key;
   }
 }
