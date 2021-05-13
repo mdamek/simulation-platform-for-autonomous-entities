@@ -94,7 +94,7 @@ app.get("/pixelsGlobal", async (req: Request, res: Response) => {
 
   let finalArray: string[][] = [];
   for (let r = 0; r < panelWidth * xNodes; r++) {
-    finalArray[r] = new Array(panelHeight * xyNodes);
+    finalArray[r] = new Array(panelHeight * yNodes);
   }
 
   let indexOfNode = 0;
