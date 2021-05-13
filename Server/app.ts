@@ -105,17 +105,14 @@ app.get("/pixelsGlobal", (req: Request, res: Response) => {
       indexOfNode++;
       axios
         .get<string[][]>(`http://${node}:${PORT}/pixelsLocal`)
-        .then((response: { data: string[][] }) => {
+        .then((response: { data: string[][], status: string }) => {
+          console.log("Status code: ", response.status)
           let responseMatrix = response.data;
           console.log(
             "x: ",
             x,
             "y: ",
-            y,
-            "i: ",
-            responseMatrix.length,
-            "j: ",
-            responseMatrix[0].length
+            y
           );
           console.log("[0,0!: ", responseMatrix[0][0])
           for (let i = 0; i < responseMatrix.length; i++) {

@@ -136,9 +136,13 @@ export class Painter {
     }
     for (let i = 0; i < this.matrix.width(); i++) {
       for (let j = 0; j < this.matrix.height(); j++) {
+        console.log("i: ", i, "j: ", j)
         let rgbColor = this.pixelsState[i][j]
+        console.log(rgbColor)
         let hexColor = rgbToHex(rgbColor.r, rgbColor.g, rgbColor.b)
-        let typeToPaint = getByValue(this.avaliableColors, hexColor)  
+        let typeToPaint = getByValue(this.avaliableColors, hexColor)
+        console.log(hexColor)
+        console.log(typeToPaint)
         tmpPixlesState[j][i] = typeToPaint;
       }
     }
