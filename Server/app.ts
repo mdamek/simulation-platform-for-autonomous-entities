@@ -126,6 +126,9 @@ app.get("/pixelsGlobal", async (req: Request, res: Response) => {
               finalArray[xIndex][yIndex] = responseMatrix[i][j];
             }
           }
+        })
+        .catch((err: any) => {
+          console.log(err)
         });
     }
   }
