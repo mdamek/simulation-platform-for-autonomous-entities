@@ -123,7 +123,7 @@ app.get("/pixelsGlobal", async (req: Request, res: Response) => {
               console.log("j ", j)
               console.log("xIndex ", xIndex)
               console.log("yIndex ", yIndex)
-              finalArray[xIndex][yIndex] = responseMatrix[i][j];
+              finalArray[yIndex][xIndex] = responseMatrix[i][j];
             }
           }
         })
