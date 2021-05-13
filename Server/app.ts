@@ -108,13 +108,12 @@ app.get("/pixelsGlobal", (req: Request, res: Response) => {
             x,
             "y: ",
             y,
-            "responseMatrix",
-            responseMatrix,
             "i: ",
             responseMatrix.length,
             "j: ",
             responseMatrix[0].length
           );
+          console.table(responseMatrix)
           for (let i = 0; i < responseMatrix.length; i++) {
             for (let j = 0; j < responseMatrix[0].length; j++) {
               finalArray[i + panelWidth * x][j + panelHeight * y] =
@@ -125,7 +124,7 @@ app.get("/pixelsGlobal", (req: Request, res: Response) => {
     }
   }
 
-  console.log("Final Array: ", finalArray);
+  console.table(finalArray)
 
   res.status(200).json(finalArray);
 });
