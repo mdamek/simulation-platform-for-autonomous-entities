@@ -4,7 +4,6 @@ import {
 } from "./helpers";
 import express, { Application, Request, Response } from "express";
 
-import { Color } from "rpi-led-matrix";
 import { FillPanelPixels } from "../Visualisations/FillPanelPixels";
 import { Painter } from "../Visualisations/Painter";
 import { PrintOwnText } from "../Visualisations/PrintText";
