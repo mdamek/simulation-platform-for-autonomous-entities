@@ -90,7 +90,7 @@ app.get("/setColor/:color", (req: Request, res: Response) => {
   res.sendStatus(200);
 });
 
-app.get("/pixelsGlobal", (req: Request, res: Response) => {
+app.get("/pixelsGlobal", async (req: Request, res: Response) => {
 
   let finalArray: string[][] = [];
   for (let r = 0; r < panelWidth; r++) {
@@ -103,7 +103,7 @@ app.get("/pixelsGlobal", (req: Request, res: Response) => {
     for (let y = 0; y < yNodes; y++) {
       let node = nodes[indexOfNode];
       indexOfNode++;
-      axios
+      await axios
         .get<string[][]>(`http://${node}:${PORT}/pixelsLocal`)
         .then((response: { data: string[][], status: number }) => {
           console.log("Status code: ", response.status)
