@@ -93,8 +93,8 @@ app.get("/setColor/:color", (req: Request, res: Response) => {
 app.get("/pixelsGlobal", async (req: Request, res: Response) => {
 
   let finalArray: string[][] = [];
-  for (let r = 0; r < panelWidth; r++) {
-    finalArray[r] = new Array(panelHeight);
+  for (let r = 0; r < panelWidth * xNodes; r++) {
+    finalArray[r] = new Array(panelHeight * xyNodes);
   }
 
   let indexOfNode = 0;
