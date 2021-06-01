@@ -1,9 +1,8 @@
-import {
-  CalculateFrequency,
-  ConvertBodyToXinukIteration,
-} from "./helpers";
 import express, { Application, Request, Response } from "express";
 
+import {
+  ConvertBodyToXinukIteration,
+} from "./helpers";
 import { FillPanelPixels } from "../Visualisations/FillPanelPixels";
 import { Painter } from "../Visualisations/Painter";
 import { PrintOwnText } from "../Visualisations/PrintText";
@@ -15,7 +14,9 @@ import { performance } from "perf_hooks";
 const PORT = 8000;
 
 let savedTime: number;
+let startSimulationTime: number;
 let requestsNumber: number = 0;
+const updatePerformanceFrequency = 20;
 
 const app: Application = express();
 app.use(bodyParser.json());
@@ -138,15 +139,20 @@ app.get("/pixelsLocal", (req: Request, res: Response) => {
 });
 
 app.post("/xinukIteration", (req: Request, res: Response) => {
+  if (requestsNumber == 0){
+    startSimulationTime = performance.now();
+  }
   const xinukIteration: XinukIteration = ConvertBodyToXinukIteration(req.body);
   painter.Paint(xinukIteration.points);
-  const updatePerformanceFrequency = 15;
   if (requestsNumber % updatePerformanceFrequency == 0) {
     if (requestsNumber != 0) {
-      CalculateFrequency(updatePerformanceFrequency, savedTime);
+      let now = performance.now();
+      let time = ((now - savedTime) / 1000)
+      console.log("Frequency: ", Math.round(updatePerformanceFrequency / time * 100) / 100, " Hz")
     }
     savedTime = performance.now();
   }
+  console.log("Total time: ", (performance.now() - startSimulationTime)/1000)
   requestsNumber++;
   res.sendStatus(200);
 });
