@@ -145,6 +145,7 @@ app.post("/xinukIteration", (req: Request, res: Response) => {
   const xinukIteration: XinukIteration = ConvertBodyToXinukIteration(req.body);
   painter.Paint(xinukIteration.points);
   if (requestsNumber % updatePerformanceFrequency == 0) {
+  console.log("Total time: ", (performance.now() - startSimulationTime)/1000)
     if (requestsNumber != 0) {
       let now = performance.now();
       let time = ((now - savedTime) / 1000)
@@ -152,7 +153,7 @@ app.post("/xinukIteration", (req: Request, res: Response) => {
     }
     savedTime = performance.now();
   }
-  console.log("Total time: ", (performance.now() - startSimulationTime)/1000)
+  console.log("Iteration number: ", xinukIteration.iterationNumber)
   requestsNumber++;
   res.sendStatus(200);
 });
