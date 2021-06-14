@@ -148,14 +148,13 @@ app.post("/xinukIteration", (req: Request, res: Response) => {
   painter.Paint(xinukIteration.points);
 
   if (requestsNumber % updatePerformanceFrequency == 0) {
-  console.log("Total time: ", (performance.now() - startSimulationTime)/1000)
     if (requestsNumber != 0) {
-      var stream = fs.createWriteStream("frequency.txt", {flags:'a', mode: 0o777});
+      var stream = fs.createWriteStream("frequency.txt", {mode: 0o777, flags:'a'});
       let now = performance.now();
       let time = ((now - savedTime) / 1000)
       let freq = Math.round(updatePerformanceFrequency / time * 100) / 100
       console.log("Frequency: ", freq, " Hz")
-      stream.write(xinukIteration.iterationNumber + "," + freq + "\n")
+      stream.write(requestsNumber + "," + freq + "\n")
       stream.end();
     }
     savedTime = performance.now();
@@ -174,4 +173,5 @@ app.get("/clear", (req: Request, res: Response) => {
 app.listen(PORT, () => {
   console.log("Server is running on port", PORT);
   painter.PrintString("LED server is ready");
+  fs.writeFile('frequency.txt', '', function(){console.log('done')});
 });
