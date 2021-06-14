@@ -9,6 +9,7 @@ import { PrintOwnText } from "../Visualisations/PrintText";
 import { XinukIteration } from "../Models/XinukInterfaces";
 import axios from "axios";
 import bodyParser from "body-parser";
+import fs from 'fs';
 import { performance } from "perf_hooks";
 
 const PORT = 8000;
@@ -16,7 +17,7 @@ const PORT = 8000;
 let savedTime: number;
 let startSimulationTime: number;
 let requestsNumber: number = 0;
-const updatePerformanceFrequency = 20;
+const updatePerformanceFrequency = 5;
 
 const app: Application = express();
 app.use(bodyParser.json());
@@ -144,15 +145,21 @@ app.post("/xinukIteration", (req: Request, res: Response) => {
   }
   const xinukIteration: XinukIteration = ConvertBodyToXinukIteration(req.body);
   painter.Paint(xinukIteration.points);
+
   if (requestsNumber % updatePerformanceFrequency == 0) {
   console.log("Total time: ", (performance.now() - startSimulationTime)/1000)
     if (requestsNumber != 0) {
+      var stream = fs.createWriteStream("frequency.txt", {flags:'a'});
       let now = performance.now();
       let time = ((now - savedTime) / 1000)
-      console.log("Frequency: ", Math.round(updatePerformanceFrequency / time * 100) / 100, " Hz")
+      let freq = Math.round(updatePerformanceFrequency / time * 100) / 100
+      console.log("Frequency: ", freq, " Hz")
+      stream.write(xinukIteration.iterationNumber + "," + freq + "\n")
+      stream.end();
     }
     savedTime = performance.now();
   }
+  
   console.log("Iteration number: ", xinukIteration.iterationNumber)
   requestsNumber++;
   res.sendStatus(200);
