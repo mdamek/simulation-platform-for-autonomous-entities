@@ -141,6 +141,7 @@ app.get("/pixelsLocal", (req: Request, res: Response) => {
 
 app.post("/xinukIteration", (req: Request, res: Response) => {
   if (requestsNumber == 0){
+    console.log('Current directory: ' + process.cwd());
     startSimulationTime = performance.now();
   }
   const xinukIteration: XinukIteration = ConvertBodyToXinukIteration(req.body);
@@ -149,7 +150,7 @@ app.post("/xinukIteration", (req: Request, res: Response) => {
   if (requestsNumber % updatePerformanceFrequency == 0) {
   console.log("Total time: ", (performance.now() - startSimulationTime)/1000)
     if (requestsNumber != 0) {
-      var stream = fs.createWriteStream("frequency.txt", {flags:'a'});
+      var stream = fs.createWriteStream("frequency.txt", {flags:'a', mode: 0o777});
       let now = performance.now();
       let time = ((now - savedTime) / 1000)
       let freq = Math.round(updatePerformanceFrequency / time * 100) / 100
