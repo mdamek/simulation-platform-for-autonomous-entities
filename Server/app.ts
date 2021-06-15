@@ -160,7 +160,8 @@ app.post("/xinukIteration", (req: Request, res: Response) => {
     savedTime = performance.now();
   }
   
-  console.log("Iteration number: ", xinukIteration.iterationNumber)
+  console.log("Iteration number: ",  xinukIteration.iterationNumber)
+  console.log("Time total: ", (performance.now() - startSimulationTime) / 1000)
   requestsNumber++;
   res.sendStatus(200);
 });
