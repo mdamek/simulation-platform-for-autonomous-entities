@@ -119,8 +119,8 @@ app.get("/pixelsGlobal", async (req: Request, res: Response) => {
           );
           for (let i = 0; i < responseMatrix.length; i++) {
             for (let j = 0; j < responseMatrix[0].length; j++) {
-              let xIndex = i + (panelWidth * x)
-              let yIndex = j + (panelHeight * y)
+              let xIndex = j + (panelWidth * x)
+              let yIndex = i + (panelHeight * y)
               finalArray[yIndex][xIndex] = responseMatrix[i][j];
             }
           }
